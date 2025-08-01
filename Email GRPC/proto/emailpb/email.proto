@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package emailpb;
+
+option go_package = "github.com/rujuldwivedi/Email-GRPC/proto/emailpb";
+
+service EmailService
+{
+  rpc ValidateEmail(EmailRequest) returns (EmailResponse);
+
+  rpc BatchValidate(stream EmailRequest) returns (BatchResponse);
+}
+
+message EmailRequest
+{
+  string email = 1;
+}
+
+message EmailResponse
+{
+  bool is_valid = 1;
+  string normalized_email = 2;
+  string suggested_domain = 3;
+}
+
+message BatchResponse
+{
+  int32 total = 1;
+  int32 valid = 2;
+  repeated string suggested_domains = 3;
+}
